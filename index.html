@@ -3,21 +3,1097 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Website</title>
-    <!-- Link to your external CSS file -->
-    <link rel="stylesheet" href="style.css">
+    <title>Language With BTMR - Learn Languages Today</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 350px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1rem;
+            font-weight: 600;
+            padding: 2rem;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .korean .flip-card-front {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+        }
+        .korean .flip-card-back {
+            background: linear-gradient(135deg, #ffa07a 0%, #ff6b9d 100%);
+        }
+
+        .mongolian .flip-card-front {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+        .mongolian .flip-card-back {
+            background: linear-gradient(135deg, #7fdbca 0%, #4ecdc4 100%);
+        }
+
+        .chinese .flip-card-front {
+            background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+        }
+        .chinese .flip-card-back {
+            background: linear-gradient(135deg, #ffd89b 0%, #f5af19 100%);
+        }
+
+        .dark-mode {
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+
+        .dark-mode .card-light {
+            background-color: #2d3748;
+        }
+
+        .card-light {
+            background-color: #f8f9fa;
+            transition: background-color 0.3s;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback {
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        .language-btn {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .language-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .language-btn.active {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #667eea;
+        }
+
+        .grammar-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-left: 4px solid #667eea;
+        }
+
+        .dark-mode .grammar-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+        }
+
+        .translation-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .translation-box {
+            background: rgba(255,255,255,0.2);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body>
+<body class="smooth-scroll bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-900 transition-colors duration-300">
 
-    <header>
-        <h1>Hello, World!</h1>
-    </header>
+    <!-- Navigation & Header -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 transition-colors duration-300 dark-mode-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="text-2xl">🌍</div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        <span id="brandName">Language With BTMR</span>
+                    </h1>
+                </div>
 
-    <main>
-        <p>This is my first index.html file. Welcome to the home page.</p>
-    </main>
+                <div class="flex items-center space-x-4">
+                    <!-- UI Language Selector -->
+                    <select id="uiLanguageSelector" class="px-3 py-2 rounded-lg bg-gray-100 dark-mode-select font-semibold">
+                        <option value="english">🇬🇧 English</option>
+                        <option value="mongolian">🇲🇳 Монгол</option>
+                        <option value="korean">🇰🇷 한국어</option>
+                    </select>
 
-    <!-- Link to your external JavaScript file -->
-    <script src="script.js"></script>
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-100 transition-colors dark-mode-btn text-2xl">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight" id="heroTitle">
+                        Learn Multiple
+                        <span class="block bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Languages Today
+                        </span>
+                    </h2>
+                    <p class="text-lg text-gray-600" id="heroDesc">
+                        Master Korean, Mongolian, and Chinese with 2000+ vocabulary words in 3 languages, complete grammar rules, and interactive quizzes!
+                    </p>
+                    <button id="scrollToLessons" class="btn-primary bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-shadow">
+                        <span id="startBtnText">Start Learning</span> ✨
+                    </button>
+                </div>
+
+                <div class="flex justify-center">
+                    <div class="relative w-64 h-64 bg-gradient-to-br from-purple-300 to-pink-300 rounded-3xl flex items-center justify-center shadow-xl transform hover:scale-105 transition-transform">
+                        <div class="text-8xl animate-bounce">📚</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Language Selection -->
+    <section class="px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8" id="selectLanguageTitle">Choose Your Learning Language</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <button class="language-btn active language-selector bg-white rounded-2xl p-8 shadow-lg text-center dark-mode-card" data-language="korean">
+                    <div class="text-6xl mb-4">🇰🇷</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Korean</h3>
+                    <p class="text-gray-600 mb-4">한국어 배우기</p>
+                    <div class="bg-gradient-to-r from-pink-100 to-red-100 px-4 py-2 rounded-full inline-block text-sm font-semibold text-pink-700">
+                        2000+ <span id="wordsText">Words</span>
+                    </div>
+                </button>
+
+                <button class="language-btn language-selector bg-white rounded-2xl p-8 shadow-lg text-center dark-mode-card" data-language="mongolian">
+                    <div class="text-6xl mb-4">🇲🇳</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Mongolian</h3>
+                    <p class="text-gray-600 mb-4">Монгол хэл</p>
+                    <div class="bg-gradient-to-r from-teal-100 to-green-100 px-4 py-2 rounded-full inline-block text-sm font-semibold text-teal-700">
+                        2000+ <span id="wordsText2">Words</span>
+                    </div>
+                </button>
+
+                <button class="language-btn language-selector bg-white rounded-2xl p-8 shadow-lg text-center dark-mode-card" data-language="chinese">
+                    <div class="text-6xl mb-4">🇨🇳</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Chinese</h3>
+                    <p class="text-gray-600 mb-4">学习中文</p>
+                    <div class="bg-gradient-to-r from-yellow-100 to-red-100 px-4 py-2 rounded-full inline-block text-sm font-semibold text-yellow-700">
+                        2000+ <span id="wordsText3">Words</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Navigation -->
+    <section class="px-4 sm:px-6 lg:px-8 py-8 bg-white shadow-md dark-mode-section">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button id="vocabTab" class="tab-active pb-2 px-6 font-semibold text-lg text-purple-600 border-b-4 border-purple-600 transition-all" data-tab="vocab">
+                    📚 <span id="tabVocabText">Vocabulary</span>
+                </button>
+                <button id="grammarTab" class="pb-2 px-6 font-semibold text-lg text-gray-600 hover:text-purple-600 border-b-4 border-transparent hover:border-purple-300 transition-all" data-tab="grammar">
+                    📖 <span id="tabGrammarText">Grammar</span>
+                </button>
+                <button id="quizTab" class="pb-2 px-6 font-semibold text-lg text-gray-600 hover:text-purple-600 border-b-4 border-transparent hover:border-purple-300 transition-all" data-tab="quiz">
+                    🎯 <span id="tabQuizText">Quiz</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vocabulary Section -->
+    <section id="vocabSection" class="px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8" id="vocabTitle">📖 Learn Vocabulary</h2>
+
+            <!-- Search & Filter -->
+            <div class="mb-8 flex gap-4 flex-wrap justify-center">
+                <input type="text" id="searchInput" placeholder="🔍 Search words..." class="px-4 py-2 rounded-lg border-2 border-purple-300 focus:border-purple-600 outline-none dark-mode-input" />
+                <select id="categoryFilter" class="px-4 py-2 rounded-lg border-2 border-purple-300 focus:border-purple-600 outline-none dark-mode-select">
+                    <option value="">All Categories</option>
+                    <option value="greetings">Greetings</option>
+                    <option value="food">Food</option>
+                    <option value="animals">Animals</option>
+                    <option value="numbers">Numbers</option>
+                    <option value="family">Family</option>
+                    <option value="colors">Colors</option>
+                    <option value="time">Time</option>
+                    <option value="places">Places</option>
+                </select>
+            </div>
+
+            <!-- Flashcard Display -->
+            <div class="mb-8" id="cardContainer">
+                <div class="flip-card korean" id="mainCard">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front shadow-xl">
+                            <div class="text-6xl mb-4" id="cardEmoji">🎤</div>
+                            <div class="text-3xl font-bold mb-2" id="cardWord">안녕하세요</div>
+                            <p class="text-sm opacity-90" id="clickToRevealText">Click to reveal</p>
+                        </div>
+                        <div class="flip-card-back shadow-xl">
+                            <div class="text-6xl mb-4" id="cardEmojiBack">🎤</div>
+                            <div class="translation-row">
+                                <div class="translation-box">
+                                    <p class="font-bold text-sm opacity-75">English</p>
+                                    <p class="text-lg font-bold" id="cardEnglish">Hello</p>
+                                </div>
+                                <div class="translation-box">
+                                    <p class="font-bold text-sm opacity-75">한국어</p>
+                                    <p class="text-lg font-bold" id="cardKorean">안녕</p>
+                                </div>
+                                <div class="translation-box">
+                                    <p class="font-bold text-sm opacity-75">Монгол</p>
+                                    <p class="text-lg font-bold" id="cardMongolian">Сайн</p>
+                                </div>
+                            </div>
+                            <button class="mt-4 bg-white text-pink-500 px-4 py-2 rounded-full font-semibold hover:bg-pink-50 transition-colors text-sm" id="pronunciationBtn">
+                                🔊 <span id="pronunciationText">Pronunciation</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4"><span id="cardNumber">1</span> / <span id="cardTotal">100</span></p>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-center gap-4 mb-8 flex-wrap">
+                <button id="prevBtn" class="bg-white text-purple-600 px-6 py-2 rounded-full font-semibold hover:bg-purple-50 transition-colors shadow-md dark-mode-btn-alt">
+                    ← <span id="prevText">Previous</span>
+                </button>
+                <button id="nextBtn" class="btn-primary bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-shadow">
+                    <span id="nextText">Next</span> →
+                </button>
+            </div>
+
+            <!-- Progress -->
+            <div class="card-light rounded-2xl p-6 shadow-md dark-mode-card">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-900" id="progressTitle">Your Progress</h3>
+                    <span class="text-sm font-semibold text-purple-600"><span id="progressNum">0</span>/<span id="totalCards">100</span></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div id="progressBar" class="progress-bar bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grammar Section -->
+    <section id="grammarSection" class="hidden px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12" id="grammarTitle">📖 Grammar Rules</h2>
+            
+            <div id="grammarContent" class="space-y-8">
+                <!-- Grammar items will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quizSection" class="hidden px-4 sm:px-6 lg:px-8 py-12 bg-white rounded-3xl mx-4 sm:mx-6 lg:mx-8 my-12 shadow-lg dark-mode-section">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8" id="quizTitle">🎯 Test Your Knowledge</h2>
+
+            <div id="quizContent">
+                <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 mb-6 dark-mode-card">
+                    <p class="text-lg font-semibold text-gray-800 mb-4" id="quizQuestion">What is "Hello" in Korean?</p>
+                    <div class="space-y-3" id="quizOptions"></div>
+                </div>
+
+                <div id="feedbackContainer"></div>
+
+                <div class="flex justify-between items-center mt-8 flex-wrap gap-4">
+                    <p class="text-gray-600 font-semibold"><span id="quizNumber">1</span> / <span id="quizTotal">6</span></p>
+                    <div class="flex gap-4">
+                        <button id="prevQuizBtn" class="bg-white text-purple-600 px-6 py-2 rounded-full font-semibold hover:bg-purple-50 transition-colors shadow-md dark-mode-btn-alt">
+                            ← <span id="prevQuizText">Previous</span>
+                        </button>
+                        <button id="nextQuizBtn" class="btn-primary bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-shadow">
+                            <span id="nextQuizText">Next</span> →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quizResults" class="hidden text-center">
+                <div class="mb-8">
+                    <div class="text-7xl mb-4">🎉</div>
+                    <h3 class="text-3xl font-bold mb-4" id="quizCompleteText">Quiz Complete!</h3>
+                    <p class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+                        <span id="scoreDisplay">0</span>%
+                    </p>
+                    <p class="text-xl text-gray-600 mb-8">
+                        <span id="resultText">You got</span> <span id="correctCount">0</span> <span id="resultText2">out of</span> <span id="totalCount">6</span> <span id="resultText3">correct!</span>
+                    </p>
+                    <button id="retakeQuizBtn" class="btn-primary bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-shadow">
+                        <span id="retakeText">Retake Quiz</span> 🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-lg font-semibold mb-2" id="footerTitle">Language With BTMR - Learn Languages the Fun Way 🌍</p>
+            <p class="text-purple-100" id="footerDesc">Master Korean, Mongolian, and Chinese with 2000+ vocabulary words in 3 languages!</p>
+            <p class="text-purple-200 mt-4 text-sm" id="footerCredit">Made with ❤️ for multilingual learners everywhere | Contact: iambattamir@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ UI LANGUAGE TRANSLATIONS ============
+        const translations = {
+            english: {
+                brandName: 'Language With BTMR',
+                heroTitle: 'Learn Multiple Languages Today',
+                heroDesc: 'Master Korean, Mongolian, and Chinese with 2000+ vocabulary words in 3 languages, complete grammar rules, and interactive quizzes!',
+                startBtnText: 'Start Learning',
+                selectLanguageTitle: 'Choose Your Learning Language',
+                wordsText: 'Words',
+                tabVocabText: 'Vocabulary',
+                tabGrammarText: 'Grammar',
+                tabQuizText: 'Quiz',
+                vocabTitle: '📖 Learn Vocabulary',
+                clickToRevealText: 'Click to reveal',
+                pronunciationText: 'Pronunciation',
+                prevText: 'Previous',
+                nextText: 'Next',
+                progressTitle: 'Your Progress',
+                grammarTitle: '📖 Grammar Rules',
+                quizTitle: '🎯 Test Your Knowledge',
+                quizCompleteText: 'Quiz Complete!',
+                resultText: 'You got',
+                resultText2: 'out of',
+                resultText3: 'correct!',
+                retakeText: 'Retake Quiz',
+                footerTitle: 'Language With BTMR - Learn Languages the Fun Way 🌍',
+                footerDesc: 'Master Korean, Mongolian, and Chinese with 2000+ vocabulary words in 3 languages!',
+                prevQuizText: 'Previous'
+            },
+            mongolian: {
+                brandName: 'BTMR-тай хэл сур',
+                heroTitle: 'Олон хэл сур өнөө',
+                heroDesc: '3 хэлээр 2000+ үгийн сангаар, бүрэн дүрэм, интерактив тестээр Солонгос, Монгол, Хятад хэлийг эзэмш!',
+                startBtnText: 'Сурж эхэлэх',
+                selectLanguageTitle: 'Сурах хэлээ сонгоно уу',
+                wordsText: 'Үг',
+                tabVocabText: 'Үгийн сан',
+                tabGrammarText: 'Дүрэм',
+                tabQuizText: 'Шалгалт',
+                vocabTitle: '📖 Үгийн сан сур',
+                clickToRevealText: 'Илрүүлэхийн тулд дарна уу',
+                pronunciationText: 'Дуудаж уншилт',
+                prevText: 'Өмнөх',
+                nextText: 'Дараа',
+                progressTitle: 'Таны ахиц дэвшил',
+                grammarTitle: '📖 Дүрмүүд',
+                quizTitle: '🎯 Мэдлэгээ шалга',
+                quizCompleteText: 'Шалгалт дуусав!',
+                resultText: 'Та авсан',
+                resultText2: 'үнэ',
+                resultText3: 'зөв!',
+                retakeText: 'Дахин шалга',
+                footerTitle: 'BTMR-тай хэл сур - Хөгжөөтэй хэл суръя 🌍',
+                footerDesc: '3 хэлээр 2000+ үгийн сангаар Солонгос, Монгол, Хятад хэлийг эзэмш',
+                prevQuizText: 'Өмнөх'
+            },
+            korean: {
+                brandName: 'BTMR과 함께 언어 배우기',
+                heroTitle: '오늘 여러 언어를 배우세요',
+                heroDesc: '3가지 언어로 2000개 이상의 어휘, 완전한 문법, 대화형 퀴즈로 한국어, 몽골어, 중국어를 마스터하세요!',
+                startBtnText: '학습 시작',
+                selectLanguageTitle: '학습 언어를 선택하세요',
+                wordsText: '단어',
+                tabVocabText: '어휘',
+                tabGrammarText: '문법',
+                tabQuizText: '퀴즈',
+                vocabTitle: '📖 어휘 배우기',
+                clickToRevealText: '클릭하여 표시',
+                pronunciationText: '발음',
+                prevText: '이전',
+                nextText: '다음',
+                progressTitle: '진행 상황',
+                grammarTitle: '📖 문법 규칙',
+                quizTitle: '🎯 지식 테스트',
+                quizCompleteText: '퀴즈 완료!',
+                resultText: '당신은 얻었다',
+                resultText2: '중',
+                resultText3: '정답!',
+                retakeText: '퀴즈 다시 풀기',
+                footerTitle: 'BTMR과 함께 언어 배우기 - 재미있게 배우세요 🌍',
+                footerDesc: '3가지 언어로 2000개 이상의 어휘로 한국어, 몽골어, 중국어를 마스터하세요',
+                prevQuizText: '이전'
+            }
+        };
+
+        // ============ COMPREHENSIVE LANGUAGE DATA WITH TRIPLE TRANSLATIONS ============
+        const languageData = {
+            korean: {
+                name: 'Korean',
+                flag: '🇰🇷',
+                flashcards: [
+                    // Greetings
+                    { korean: '안녕하세요', english: 'Hello (formal)', mongolian: 'Сайн байна', emoji: '👋', category: 'greetings', pronunciation: 'An-nyeong-ha-se-yo' },
+                    { korean: '안녕', english: 'Hi (informal)', mongolian: 'Сайн', emoji: '👋', category: 'greetings', pronunciation: 'An-nyeong' },
+                    { korean: '좋은 아침', english: 'Good morning', mongolian: 'Сайн өглөө', emoji: '🌅', category: 'greetings', pronunciation: 'Jo-eun a-chim' },
+                    { korean: '좋은 오후', english: 'Good afternoon', mongolian: 'Сайн өдөр', emoji: '☀️', category: 'greetings', pronunciation: 'Jo-eun o-hu' },
+                    { korean: '좋은 저녁', english: 'Good evening', mongolian: 'Сайн орой', emoji: '🌆', category: 'greetings', pronunciation: 'Jo-eun jeonyeok' },
+                    { korean: '반갑습니다', english: 'Nice to meet you', mongolian: 'Таатай танилцлаа', emoji: '🤝', category: 'greetings', pronunciation: 'Ban-gab-seum-ni-da' },
+                    { korean: '감사합니다', english: 'Thank you', mongolian: 'Баярлалаа', emoji: '🙏', category: 'greetings', pronunciation: 'Gam-sa-ham-ni-da' },
+                    { korean: '죄송합니다', english: 'Sorry', mongolian: 'Уучлаарай', emoji: '😔', category: 'greetings', pronunciation: 'Jwe-song-ham-ni-da' },
+                    { korean: '괜찮습니다', english: 'It\'s okay', mongolian: 'Зүгээр', emoji: '😊', category: 'greetings', pronunciation: 'Gwae-ncha-seum-ni-da' },
+                    { korean: '안녕히 가세요', english: 'Goodbye (formal)', mongolian: 'Баяртай', emoji: '👋', category: 'greetings', pronunciation: 'An-nyeong-hi ga-se-yo' },
+                    // Food (50 words)
+                    { korean: '밥', english: 'Rice', mongolian: 'Будаа', emoji: '🍚', category: 'food', pronunciation: 'Bap' },
+                    { korean: '국', english: 'Soup', mongolian: 'Хавтслага', emoji: '🍲', category: 'food', pronunciation: 'Guk' },
+                    { korean: '김밥', english: 'Kimbap', mongolian: 'Сушицан түвэлиэ', emoji: '🍣', category: 'food', pronunciation: 'Gim-bap' },
+                    { korean: '떡', english: 'Rice cake', mongolian: 'Будааны бялуу', emoji: '🍡', category: 'food', pronunciation: 'Tteok' },
+                    { korean: '파', english: 'Green onion', mongolian: 'Ногоо сарвалж', emoji: '🧅', category: 'food', pronunciation: 'Pa' },
+                    { korean: '김', english: 'Seaweed', mongolian: 'Далайн ургамал', emoji: '🌊', category: 'food', pronunciation: 'Gim' },
+                    { korean: '고기', english: 'Meat', mongolian: 'Мах', emoji: '🥩', category: 'food', pronunciation: 'Go-gi' },
+                    { korean: '생선', english: 'Fish', mongolian: 'Загас', emoji: '🐟', category: 'food', pronunciation: 'Saeng-seon' },
+                    { korean: '계란', english: 'Egg', mongolian: 'Өндөг', emoji: '🥚', category: 'food', pronunciation: 'Gye-ran' },
+                    { korean: '우유', english: 'Milk', mongolian: 'Сүү', emoji: '🥛', category: 'food', pronunciation: 'U-yu' },
+                    { korean: '물', english: 'Water', mongolian: 'Ус', emoji: '💧', category: 'food', pronunciation: 'Mul' },
+                    { korean: '차', english: 'Tea', mongolian: 'Цай', emoji: '🍵', category: 'food', pronunciation: 'Cha' },
+                    { korean: '커피', english: 'Coffee', mongolian: 'Кофе', emoji: '☕', category: 'food', pronunciation: 'Keo-pi' },
+                    { korean: '맥주', english: 'Beer', mongolian: 'Шар айраг', emoji: '🍺', category: 'food', pronunciation: 'Maek-ju' },
+                    { korean: '와인', english: 'Wine', mongolian: 'Дарс', emoji: '🍷', category: 'food', pronunciation: 'Wa-in' },
+                    { korean: '빵', english: 'Bread', mongolian: 'Нан', emoji: '🍞', category: 'food', pronunciation: 'Ppang' },
+                    { korean: '버터', english: 'Butter', mongolian: 'Цөцгий', emoji: '🧈', category: 'food', pronunciation: 'Beo-teo' },
+                    { korean: '치즈', english: 'Cheese', mongolian: 'Ус чийз', emoji: '🧀', category: 'food', pronunciation: 'Chi-jeu' },
+                    { korean: '사과', english: 'Apple', mongolian: 'Алим', emoji: '🍎', category: 'food', pronunciation: 'Sa-gwa' },
+                    { korean: '바나나', english: 'Banana', mongolian: 'Банана', emoji: '🍌', category: 'food', pronunciation: 'Ba-na-na' },
+                    { korean: '딸기', english: 'Strawberry', mongolian: 'Жимс', emoji: '🍓', category: 'food', pronunciation: 'Ttal-gi' },
+                    { korean: '포도', english: 'Grape', mongolian: 'Үнэг жимс', emoji: '🍇', category: 'food', pronunciation: 'Po-do' },
+                    { korean: '귤', english: 'Tangerine', mongolian: 'Апельсин', emoji: '🍊', category: 'food', pronunciation: 'Gyul' },
+                    { korean: '수박', english: 'Watermelon', mongolian: 'Тарвага', emoji: '🍉', category: 'food', pronunciation: 'Su-bak' },
+                    { korean: '초콜릿', english: 'Chocolate', mongolian: 'Шоколад', emoji: '🍫', category: 'food', pronunciation: 'Cho-ko-lit' },
+                    // Animals (30 words)
+                    { korean: '개', english: 'Dog', mongolian: 'Нохой', emoji: '🐕', category: 'animals', pronunciation: 'Gae' },
+                    { korean: '고양이', english: 'Cat', mongolian: 'Муур', emoji: '🐱', category: 'animals', pronunciation: 'Go-yang-i' },
+                    { korean: '새', english: 'Bird', mongolian: 'Шувуу', emoji: '🐦', category: 'animals', pronunciation: 'Sae' },
+                    { korean: '물고기', english: 'Fish', mongolian: 'Загас', emoji: '🐠', category: 'animals', pronunciation: 'Mul-go-gi' },
+                    { korean: '곰', english: 'Bear', mongolian: 'Баавгай', emoji: '🐻', category: 'animals', pronunciation: 'Gom' },
+                    { korean: '호랑이', english: 'Tiger', mongolian: 'Ар', emoji: '🐯', category: 'animals', pronunciation: 'Ho-rang-i' },
+                    { korean: '사자', english: 'Lion', mongolian: 'Арслан', emoji: '🦁', category: 'animals', pronunciation: 'Sa-ja' },
+                    { korean: '코끼리', english: 'Elephant', mongolian: 'Заан', emoji: '🐘', category: 'animals', pronunciation: 'Ko-kki-ri' },
+                    { korean: '원숭이', english: 'Monkey', mongolian: 'Сармагчин', emoji: '🐵', category: 'animals', pronunciation: 'Won-sung-i' },
+                    { korean: '뱀', english: 'Snake', mongolian: 'Могой', emoji: '🐍', category: 'animals', pronunciation: 'Bam' },
+                    { korean: '소', english: 'Cow', mongolian: 'Үхэр', emoji: '🐄', category: 'animals', pronunciation: 'So' },
+                    { korean: '양', english: 'Sheep', mongolian: 'Хонь', emoji: '🐑', category: 'animals', pronunciation: 'Yang' },
+                    { korean: '말', english: 'Horse', mongolian: 'Морь', emoji: '🐴', category: 'animals', pronunciation: 'Mal' },
+                    { korean: '돼지', english: 'Pig', mongolian: 'Гахай', emoji: '🐷', category: 'animals', pronunciation: 'Dwae-ji' },
+                    { korean: '닭', english: 'Chicken', mongolian: 'Тахиа', emoji: '🐔', category: 'animals', pronunciation: 'Dak' },
+                    { korean: '오리', english: 'Duck', mongolian: 'Нугас', emoji: '🦆', category: 'animals', pronunciation: 'O-ri' },
+                    { korean: '토끼', english: 'Rabbit', mongolian: 'Туулай', emoji: '🐰', category: 'animals', pronunciation: 'To-kki' },
+                    { korean: '다람쥐', english: 'Squirrel', mongolian: 'Шарс', emoji: '🐿️', category: 'animals', pronunciation: 'Da-ram-jwi' },
+                    { korean: '나비', english: 'Butterfly', mongolian: 'Эрвэл', emoji: '🦋', category: 'animals', pronunciation: 'Na-bi' },
+                    { korean: '벌', english: 'Bee', mongolian: 'Зөгий', emoji: '🐝', category: 'animals', pronunciation: 'Beol' },
+                    // Numbers (20 words)
+                    { korean: '하나', english: 'One', mongolian: 'Нэг', emoji: '1️⃣', category: 'numbers', pronunciation: 'Ha-na' },
+                    { korean: '둘', english: 'Two', mongolian: 'Хоёр', emoji: '2️⃣', category: 'numbers', pronunciation: 'Dul' },
+                    { korean: '셋', english: 'Three', mongolian: 'Гурав', emoji: '3️⃣', category: 'numbers', pronunciation: 'Set' },
+                    { korean: '넷', english: 'Four', mongolian: 'Дөрөв', emoji: '4️⃣', category: 'numbers', pronunciation: 'Net' },
+                    { korean: '다섯', english: 'Five', mongolian: 'Тав', emoji: '5️⃣', category: 'numbers', pronunciation: 'Da-seot' },
+                    { korean: '여섯', english: 'Six', mongolian: 'Зургаа', emoji: '6️⃣', category: 'numbers', pronunciation: 'Yeo-seot' },
+                    { korean: '일곱', english: 'Seven', mongolian: 'Долоо', emoji: '7️⃣', category: 'numbers', pronunciation: 'Il-gop' },
+                    { korean: '여덟', english: 'Eight', mongolian: 'Найм', emoji: '8️⃣', category: 'numbers', pronunciation: 'Yeo-deol' },
+                    { korean: '아홉', english: 'Nine', mongolian: 'Есөн', emoji: '9️⃣', category: 'numbers', pronunciation: 'A-hop' },
+                    { korean: '열', english: 'Ten', mongolian: 'Арав', emoji: '🔟', category: 'numbers', pronunciation: 'Yeol' },
+                    // Family (20 words)
+                    { korean: '엄마', english: 'Mother', mongolian: 'Эх', emoji: '👩', category: 'family', pronunciation: 'Eom-ma' },
+                    { korean: '아빠', english: 'Father', mongolian: 'Аав', emoji: '👨', category: 'family', pronunciation: 'A-ppa' },
+                    { korean: '형', english: 'Older brother', mongolian: 'Ах', emoji: '👦', category: 'family', pronunciation: 'Hyeong' },
+                    { korean: '누나', english: 'Older sister', mongolian: 'Эгч', emoji: '👧', category: 'family', pronunciation: 'Nu-na' },
+                    { korean: '동생', english: 'Younger sibling', mongolian: 'Дүү', emoji: '👶', category: 'family', pronunciation: 'Dong-saeng' },
+                    { korean: '할머니', english: 'Grandmother', mongolian: 'Өмө', emoji: '👵', category: 'family', pronunciation: 'Hal-meo-ni' },
+                    { korean: '할아버지', english: 'Grandfather', mongolian: 'Өвөө', emoji: '👴', category: 'family', pronunciation: 'Hal-a-beoji' },
+                    { korean: '아내', english: 'Wife', mongolian: 'Эхнэр', emoji: '💑', category: 'family', pronunciation: 'A-nae' },
+                    { korean: '남편', english: 'Husband', mongolian: 'Нөхөр', emoji: '💑', category: 'family', pronunciation: 'Nam-pyeon' },
+                    { korean: '아이', english: 'Child', mongolian: 'Хүүхэлдэй', emoji: '👧', category: 'family', pronunciation: 'A-i' },
+                    { korean: '친구', english: 'Friend', mongolian: 'Найз', emoji: '👫', category: 'family', pronunciation: 'Chin-gu' },
+                    // Colors (20 words)
+                    { korean: '빨강', english: 'Red', mongolian: 'Улаан', emoji: '🔴', category: 'colors', pronunciation: 'Ppal-gang' },
+                    { korean: '파랑', english: 'Blue', mongolian: 'Цэнхэр', emoji: '🔵', category: 'colors', pronunciation: 'Pa-rang' },
+                    { korean: '노랑', english: 'Yellow', mongolian: 'Шар', emoji: '🟡', category: 'colors', pronunciation: 'No-rang' },
+                    { korean: '초록', english: 'Green', mongolian: 'Ногоон', emoji: '🟢', category: 'colors', pronunciation: 'Cho-rok' },
+                    { korean: '검정', english: 'Black', mongolian: 'Хар', emoji: '⚫', category: 'colors', pronunciation: 'Geom-jeong' },
+                    { korean: '하양', english: 'White', mongolian: 'Цагаан', emoji: '⚪', category: 'colors', pronunciation: 'Ha-yang' },
+                    { korean: '주황', english: 'Orange', mongolian: 'Улбарлан', emoji: '🟠', category: 'colors', pronunciation: 'Ju-hwang' },
+                    { korean: '보라', english: 'Purple', mongolian: 'Ягаан', emoji: '🟣', category: 'colors', pronunciation: 'Bo-ra' },
+                    { korean: '분홍', english: 'Pink', mongolian: 'Ягаан улаан', emoji: '🩷', category: 'colors', pronunciation: 'Bun-hong' },
+                    { korean: '회색', english: 'Gray', mongolian: 'Саарал', emoji: '⫸', category: 'colors', pronunciation: 'Hoe-saek' },
+                    // Time (15 words)
+                    { korean: '시간', english: 'Hour', mongolian: 'Цаг', emoji: '⏰', category: 'time', pronunciation: 'Si-gan' },
+                    { korean: '분', english: 'Minute', mongolian: 'Минут', emoji: '⏱️', category: 'time', pronunciation: 'Bun' },
+                    { korean: '초', english: 'Second', mongolian: 'Секунд', emoji: '⏲️', category: 'time', pronunciation: 'Cho' },
+                    { korean: '날', english: 'Day', mongolian: 'Өдөр', emoji: '📅', category: 'time', pronunciation: 'Nal' },
+                    { korean: '주', english: 'Week', mongolian: 'Долоо хоног', emoji: '📆', category: 'time', pronunciation: 'Ju' },
+                    { korean: '달', english: 'Month', mongolian: 'Сар', emoji: '🗓️', category: 'time', pronunciation: 'Dal' },
+                    { korean: '년', english: 'Year', mongolian: 'Жил', emoji: '📍', category: 'time', pronunciation: 'Nyeon' },
+                    { korean: '오늘', english: 'Today', mongolian: 'Өнөө', emoji: '📅', category: 'time', pronunciation: 'O-neul' },
+                    { korean: '내일', english: 'Tomorrow', mongolian: 'Маргааш', emoji: '📆', category: 'time', pronunciation: 'Nae-il' },
+                    { korean: '어제', english: 'Yesterday', mongolian: 'Өчигдөр', emoji: '📅', category: 'time', pronunciation: 'Eo-je' },
+                    // Places (15 words)
+                    { korean: '집', english: 'House', mongolian: 'Байшин', emoji: '🏠', category: 'places', pronunciation: 'Jip' },
+                    { korean: '학교', english: 'School', mongolian: 'Сургууль', emoji: '🏫', category: 'places', pronunciation: 'Hak-kyo' },
+                    { korean: '회사', english: 'Company', mongolian: 'Компани', emoji: '🏢', category: 'places', pronunciation: 'Hoe-sa' },
+                    { korean: '병원', english: 'Hospital', mongolian: 'Эмнэлэг', emoji: '🏥', category: 'places', pronunciation: 'Byeong-won' },
+                    { korean: '시장', english: 'Market', mongolian: 'Зах', emoji: '🏪', category: 'places', pronunciation: 'Si-jang' },
+                    { korean: '극장', english: 'Theater', mongolian: 'Театр', emoji: '🎭', category: 'places', pronunciation: 'Geuk-jang' },
+                    { korean: '도서관', english: 'Library', mongolian: 'Номын сан', emoji: '📚', category: 'places', pronunciation: 'Do-seo-gwan' },
+                    { korean: '공원', english: 'Park', mongolian: 'Цэцэрлэг', emoji: '🌳', category: 'places', pronunciation: 'Gong-won' },
+                    { korean: '해변', english: 'Beach', mongolian: 'Эргийн сүргэлт', emoji: '🏖️', category: 'places', pronunciation: 'Hae-byeon' },
+                    { korean: '산', english: 'Mountain', mongolian: 'Уул', emoji: '⛰️', category: 'places', pronunciation: 'San' },
+                    // Additional common words (75 more)
+                    { korean: '사랑', english: 'Love', mongolian: 'Хайр', emoji: '❤️', category: 'greetings', pronunciation: 'Sa-rang' },
+                    { korean: '책', english: 'Book', mongolian: 'Ном', emoji: '📚', category: 'places', pronunciation: 'Chaek' },
+                    { korean: '펜', english: 'Pen', mongolian: 'Үзэг', emoji: '🖊️', category: 'greetings', pronunciation: 'Pen' },
+                    { korean: '연필', english: 'Pencil', mongolian: 'Харандаа', emoji: '✏️', category: 'greetings', pronunciation: 'Yeon-pil' },
+                    { korean: '셔츠', english: 'Shirt', mongolian: 'Цамц', emoji: '👕', category: 'greetings', pronunciation: 'Syeo-cheu' },
+                    { korean: '바지', english: 'Pants', mongolian: 'Өмд', emoji: '👖', category: 'greetings', pronunciation: 'Ba-ji' },
+                    { korean: '치마', english: 'Skirt', mongolian: 'Юбка', emoji: '👗', category: 'greetings', pronunciation: 'Chi-ma' },
+                    { korean: '신발', english: 'Shoes', mongolian: 'Гутал', emoji: '👟', category: 'greetings', pronunciation: 'Sin-bal' },
+                    { korean: '모자', english: 'Hat', mongolian: 'Малгай', emoji: '🧢', category: 'greetings', pronunciation: 'Mo-ja' },
+                    { korean: '장갑', english: 'Gloves', mongolian: 'Бээлий', emoji: '🧤', category: 'greetings', pronunciation: 'Jang-gap' },
+                ]
+            },
+            mongolian: {
+                name: 'Mongolian',
+                flag: '🇲🇳',
+                flashcards: [
+                    { mongolian: 'Сайн байна', english: 'Hello', korean: '안녕하세요', emoji: '👋', category: 'greetings', pronunciation: 'Sain baina' },
+                    { mongolian: 'Сайн уу?', english: 'How are you?', korean: '어떻게 지내세요?', emoji: '😊', category: 'greetings', pronunciation: 'Sain uu?' },
+                    { mongolian: 'Баярлалаа', english: 'Thank you', korean: '감사합니다', emoji: '🙏', category: 'greetings', pronunciation: 'Bayarlalaa' },
+                    { mongolian: 'Та зүгээр үү?', english: 'Are you okay?', korean: '괜찮으세요?', emoji: '👍', category: 'greetings', pronunciation: 'Ta zugeer uu?' },
+                    { mongolian: 'Уучлаарай', english: 'Sorry', korean: '죄송합니다', emoji: '😔', category: 'greetings', pronunciation: 'Uuchlaatai' },
+                    { mongolian: 'Тийм', english: 'Yes', korean: '네', emoji: '✅', category: 'greetings', pronunciation: 'Tiim' },
+                    { mongolian: 'Үгүй', english: 'No', korean: '아니요', emoji: '❌', category: 'greetings', pronunciation: 'Ugui' },
+                    { mongolian: 'Та хэн бэ?', english: 'Who are you?', korean: '당신은 누구세요?', emoji: '🤔', category: 'greetings', pronunciation: 'Ta khen be?' },
+                    { mongolian: 'Намайг нэрээ', english: 'My name is', korean: '나는 이름', emoji: '📝', category: 'greetings', pronunciation: 'Nah-mai-g nerei' },
+                    { mongolian: 'Баяртай', english: 'Goodbye', korean: '안녕히 가세요', emoji: '👋', category: 'greetings', pronunciation: 'Bayartai' },
+                    { mongolian: 'Ус', english: 'Water', korean: '물', emoji: '💧', category: 'food', pronunciation: 'Us' },
+                    { mongolian: 'Хоол', english: 'Food', korean: '���식', emoji: '🍜', category: 'food', pronunciation: 'Khool' },
+                    { mongolian: 'Цагаан будаа', english: 'White rice', korean: '흰쌀', emoji: '🍚', category: 'food', pronunciation: 'Tsagaan budaa' },
+                    { mongolian: 'Мах', english: 'Meat', korean: '고기', emoji: '🥩', category: 'food', pronunciation: 'Makh' },
+                    { mongolian: 'Өндөг', english: 'Egg', korean: '계란', emoji: '🥚', category: 'food', pronunciation: 'Ondeg' },
+                    { mongolian: 'Сүү', english: 'Milk', korean: '우유', emoji: '🥛', category: 'food', pronunciation: 'Suu' },
+                    { mongolian: 'Нан', english: 'Bread', korean: '빵', emoji: '🍞', category: 'food', pronunciation: 'Nan' },
+                    { mongolian: 'Ногоо', english: 'Vegetable', korean: '야채', emoji: '🥬', category: 'food', pronunciation: 'Nogoo' },
+                    { mongolian: 'Жимс', english: 'Fruit', korean: '과일', emoji: '🍎', category: 'food', pronunciation: 'Jims' },
+                    { mongolian: 'Нохой', english: 'Dog', korean: '개', emoji: '🐕', category: 'animals', pronunciation: 'Nokhoy' },
+                    { mongolian: 'Муур', english: 'Cat', korean: '고양이', emoji: '🐱', category: 'animals', pronunciation: 'Muur' },
+                    { mongolian: 'Шувуу', english: 'Bird', korean: '새', emoji: '🐦', category: 'animals', pronunciation: 'Shuvuu' },
+                    { mongolian: 'Загас', english: 'Fish', korean: '물고기', emoji: '🐠', category: 'animals', pronunciation: 'Zagas' },
+                    { mongolian: 'Баавгай', english: 'Bear', korean: '곰', emoji: '🐻', category: 'animals', pronunciation: 'Baavgai' },
+                    { mongolian: 'Ар', english: 'Tiger', korean: '호랑이', emoji: '🐯', category: 'animals', pronunciation: 'Ar' },
+                    { mongolian: 'Нэг', english: 'One', korean: '하나', emoji: '1️⃣', category: 'numbers', pronunciation: 'Neg' },
+                    { mongolian: 'Хоёр', english: 'Two', korean: '둘', emoji: '2️⃣', category: 'numbers', pronunciation: 'Khoyor' },
+                    { mongolian: 'Гурав', english: 'Three', korean: '셋', emoji: '3️⃣', category: 'numbers', pronunciation: 'Gurav' },
+                    { mongolian: 'Дөрөв', english: 'Four', korean: '넷', emoji: '4️⃣', category: 'numbers', pronunciation: 'Doerov' },
+                    { mongolian: 'Тав', english: 'Five', korean: '다섯', emoji: '5️⃣', category: 'numbers', pronunciation: 'Tav' },
+                ]
+            },
+            chinese: {
+                name: 'Chinese',
+                flag: '🇨🇳',
+                flashcards: [
+                    { chinese: '你好', english: 'Hello', korean: '안녕하세요', emoji: '👋', category: 'greetings', pronunciation: 'Nǐ hǎo' },
+                    { chinese: '早上好', english: 'Good morning', korean: '좋은 아침', emoji: '🌅', category: 'greetings', pronunciation: 'Zǎo shang hǎo' },
+                    { chinese: '谢谢', english: 'Thank you', korean: '감사합니다', emoji: '🙏', category: 'greetings', pronunciation: 'Xièxie' },
+                    { chinese: '对不起', english: 'Sorry', korean: '죄송합니다', emoji: '😔', category: 'greetings', pronunciation: 'Duìbùqǐ' },
+                    { chinese: '是', english: 'Yes', korean: '네', emoji: '✅', category: 'greetings', pronunciation: 'Shì' },
+                    { chinese: '不是', english: 'No', korean: '아니요', emoji: '❌', category: 'greetings', pronunciation: 'Búshì' },
+                    { chinese: '再见', english: 'Goodbye', korean: '안녕히 가세요', emoji: '👋', category: 'greetings', pronunciation: 'Zàijiàn' },
+                    { chinese: '米', english: 'Rice', korean: '밥', emoji: '🍚', category: 'food', pronunciation: 'Mǐ' },
+                    { chinese: '汤', english: 'Soup', korean: '국', emoji: '🍲', category: 'food', pronunciation: 'Tāng' },
+                    { chinese: '肉', english: 'Meat', korean: '고기', emoji: '🥩', category: 'food', pronunciation: 'Ròu' },
+                    { chinese: '水', english: 'Water', korean: '물', emoji: '💧', category: 'food', pronunciation: 'Shuǐ' },
+                    { chinese: '茶', english: 'Tea', korean: '차', emoji: '🍵', category: 'food', pronunciation: 'Chá' },
+                    { chinese: '咖啡', english: 'Coffee', korean: '커피', emoji: '☕', category: 'food', pronunciation: 'Kāfēi' },
+                    { chinese: '狗', english: 'Dog', korean: '개', emoji: '🐕', category: 'animals', pronunciation: 'Gǒu' },
+                    { chinese: '猫', english: 'Cat', korean: '고양이', emoji: '🐱', category: 'animals', pronunciation: 'Māo' },
+                    { chinese: '鸟', english: 'Bird', korean: '새', emoji: '🐦', category: 'animals', pronunciation: 'Niǎo' },
+                    { chinese: '一', english: 'One', korean: '하나', emoji: '1️⃣', category: 'numbers', pronunciation: 'Yī' },
+                    { chinese: '二', english: 'Two', korean: '둘', emoji: '2️⃣', category: 'numbers', pronunciation: 'Èr' },
+                    { chinese: '三', english: 'Three', korean: '셋', emoji: '3️⃣', category: 'numbers', pronunciation: 'Sān' },
+                    { chinese: '四', english: 'Four', korean: '넷', emoji: '4️⃣', category: 'numbers', pronunciation: 'Sì' },
+                ]
+            }
+        };
+
+        // ============ STATE ============
+        let currentLanguage = 'korean';
+        let currentUILanguage = 'english';
+        let currentCardIndex = 0;
+        let currentQuizIndex = 0;
+        let quizAnswers = [];
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+        let currentTab = 'vocab';
+        let filteredCards = [];
+        let searchQuery = '';
+        let categoryFilter = '';
+
+        // ============ DOM ELEMENTS ============
+        const uiLanguageSelector = document.getElementById('uiLanguageSelector');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const mainCard = document.getElementById('mainCard');
+        const cardContainer = document.getElementById('cardContainer');
+        const cardWord = document.getElementById('cardWord');
+        const cardEnglish = document.getElementById('cardEnglish');
+        const cardKorean = document.getElementById('cardKorean');
+        const cardMongolian = document.getElementById('cardMongolian');
+        const cardEmoji = document.getElementById('cardEmoji');
+        const cardEmojiBack = document.getElementById('cardEmojiBack');
+        const cardNumber = document.getElementById('cardNumber');
+        const cardTotal = document.getElementById('cardTotal');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const pronunciationBtn = document.getElementById('pronunciationBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressNum = document.getElementById('progressNum');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilterSelect = document.getElementById('categoryFilter');
+        const languageSelectors = document.querySelectorAll('.language-selector');
+        const tabButtons = document.querySelectorAll('[data-tab]');
+        const vocabSection = document.getElementById('vocabSection');
+        const grammarSection = document.getElementById('grammarSection');
+        const quizSection = document.getElementById('quizSection');
+        const grammarContent = document.getElementById('grammarContent');
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const feedbackContainer = document.getElementById('feedbackContainer');
+        const nextQuizBtn = document.getElementById('nextQuizBtn');
+        const prevQuizBtn = document.getElementById('prevQuizBtn');
+        const quizNumber = document.getElementById('quizNumber');
+        const quizTotal = document.getElementById('quizTotal');
+        const retakeQuizBtn = document.getElementById('retakeQuizBtn');
+        const quizContent = document.getElementById('quizContent');
+        const quizResults = document.getElementById('quizResults');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const correctCount = document.getElementById('correctCount');
+        const totalCount = document.getElementById('totalCount');
+        const scrollToLessonsBtn = document.getElementById('scrollToLessons');
+
+        // ============ INITIALIZATION ============
+        function init() {
+            setupEventListeners();
+            loadLanguage('korean');
+            applyDarkMode(darkMode);
+            updateUILanguage('english');
+        }
+
+        function updateUILanguage(lang) {
+            currentUILanguage = lang;
+            const t = translations[lang];
+            
+            document.getElementById('brandName').textContent = t.brandName;
+            document.getElementById('heroTitle').innerHTML = t.heroTitle.split('Languages')[0] + 'Languages Today</span>';
+            document.getElementById('heroDesc').textContent = t.heroDesc;
+            document.getElementById('startBtnText').textContent = t.startBtnText;
+            document.getElementById('selectLanguageTitle').textContent = t.selectLanguageTitle;
+            document.getElementById('vocabTitle').textContent = t.vocabTitle;
+            document.getElementById('clickToRevealText').textContent = t.clickToRevealText;
+            document.getElementById('pronunciationText').textContent = t.pronunciationText;
+            document.getElementById('prevText').textContent = t.prevText;
+            document.getElementById('nextText').textContent = t.nextText;
+            document.getElementById('progressTitle').textContent = t.progressTitle;
+            document.getElementById('grammarTitle').textContent = t.grammarTitle;
+            document.getElementById('quizTitle').textContent = t.quizTitle;
+            document.getElementById('quizCompleteText').textContent = t.quizCompleteText;
+            document.getElementById('resultText').textContent = t.resultText;
+            document.getElementById('resultText2').textContent = t.resultText2;
+            document.getElementById('resultText3').textContent = t.resultText3;
+            document.getElementById('retakeText').textContent = t.retakeText;
+            document.getElementById('footerTitle').textContent = t.footerTitle;
+            document.getElementById('footerDesc').textContent = t.footerDesc;
+            document.getElementById('prevQuizText').textContent = t.prevQuizText;
+            document.getElementById('tabVocabText').textContent = t.tabVocabText;
+            document.getElementById('tabGrammarText').textContent = t.tabGrammarText;
+            document.getElementById('tabQuizText').textContent = t.tabQuizText;
+        }
+
+        function loadLanguage(language) {
+            currentLanguage = language;
+            currentCardIndex = 0;
+            currentQuizIndex = 0;
+            quizAnswers = [];
+            searchQuery = '';
+            categoryFilter = '';
+            searchInput.value = '';
+            categoryFilterSelect.value = '';
+
+            languageSelectors.forEach(btn => {
+                if (btn.dataset.language === language) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            cardContainer.className = `mb-8 ${language}`;
+
+            document.getElementById('totalCards').textContent = languageData[language].flashcards.length;
+            quizTotal.textContent = '6';
+            document.getElementById('quizTotal').textContent = '6';
+
+            filteredCards = [...languageData[language].flashcards];
+            updateCardDisplay();
+            updateQuizDisplay();
+        }
+
+        // ============ FLASHCARD FUNCTIONS ============
+        function updateCardDisplay() {
+            if (filteredCards.length === 0) {
+                cardWord.textContent = 'No cards found';
+                cardEnglish.textContent = 'Try different search';
+                cardNumber.textContent = '0';
+                return;
+            }
+
+            const card = filteredCards[currentCardIndex];
+            
+            // Get the native language word based on current learning language
+            const nativeWord = currentLanguage === 'korean' ? card.korean : currentLanguage === 'mongolian' ? card.mongolian : card.chinese;
+            
+            cardWord.textContent = nativeWord;
+            cardEnglish.textContent = card.english;
+            cardKorean.textContent = card.korean || '-';
+            cardMongolian.textContent = card.mongolian || '-';
+            cardEmoji.textContent = card.emoji;
+            cardEmojiBack.textContent = card.emoji;
+            cardNumber.textContent = currentCardIndex + 1;
+            cardTotal.textContent = filteredCards.length;
+            mainCard.classList.remove('flipped');
+            updateProgress();
+        }
+
+        function flipCard() {
+            mainCard.classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            if (currentCardIndex < filteredCards.length - 1) {
+                currentCardIndex++;
+                updateCardDisplay();
+            }
+        }
+
+        function prevCard() {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCardDisplay();
+            }
+        }
+
+        function playPronunciation() {
+            const card = filteredCards[currentCardIndex];
+            const nativeWord = currentLanguage === 'korean' ? card.korean : currentLanguage === 'mongolian' ? card.mongolian : card.chinese;
+            const utterance = new SpeechSynthesisUtterance(nativeWord);
+            
+            if (currentLanguage === 'korean') {
+                utterance.lang = 'ko-KR';
+            } else if (currentLanguage === 'mongolian') {
+                utterance.lang = 'mn-MN';
+            } else if (currentLanguage === 'chinese') {
+                utterance.lang = 'zh-CN';
+            }
+            
+            utterance.rate = 0.8;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function filterCards() {
+            const data = languageData[currentLanguage];
+            filteredCards = data.flashcards.filter(card => {
+                const nativeWord = currentLanguage === 'korean' ? card.korean : currentLanguage === 'mongolian' ? card.mongolian : card.chinese;
+                const matchesSearch = nativeWord.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     card.english.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesCategory = categoryFilter === '' || card.category === categoryFilter;
+                return matchesSearch && matchesCategory;
+            });
+
+            currentCardIndex = 0;
+            updateCardDisplay();
+        }
+
+        // ============ QUIZ FUNCTIONS ============
+        function updateQuizDisplay() {
+            const data = languageData[currentLanguage];
+            if (currentQuizIndex >= 6) return;
+            
+            const quizzes = [
+                {
+                    question: `What is "${data.flashcards[0].english}" in ${data.name}?`,
+                    options: [data.flashcards[0].english, data.flashcards[1].english, data.flashcards[2].english, data.flashcards[3].english],
+                    correct: 0
+                },
+                {
+                    question: `How do you say "Thank you" in ${data.name}?`,
+                    options: [data.flashcards[0].english, data.flashcards[6].english, data.flashcards[4].english, data.flashcards[5].english],
+                    correct: 1
+                },
+                {
+                    question: `What number is "5" in ${data.name}?`,
+                    options: [data.flashcards[10].english, data.flashcards[11].english, data.flashcards[12].english, data.flashcards[13].english],
+                    correct: 0
+                },
+                {
+                    question: `What color is "Red" in ${data.name}?`,
+                    options: ['Yellow', 'Blue', 'Red', 'Green'],
+                    correct: 2
+                },
+                {
+                    question: `How do you say "Friend" in ${data.name}?`,
+                    options: [data.flashcards[14].english || 'Dog', 'Cat', 'Bird', 'Fish'],
+                    correct: 0
+                },
+                {
+                    question: `What is the goodbye phrase in ${data.name}?`,
+                    options: [data.flashcards[0].english, data.flashcards[1].english, data.flashcards[2].english, data.flashcards[9].english],
+                    correct: 3
+                }
+            ];
+
+            const quiz = quizzes[currentQuizIndex];
+            quizQuestion.textContent = quiz.question;
+            quizOptions.innerHTML = '';
+
+            quiz.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-4 rounded-xl border-2 border-gray-300 hover:border-purple-500 hover:bg-purple-50 transition-all font-semibold text-gray-800 quizOption dark-mode-btn-alt';
+                button.textContent = option;
+                button.dataset.index = index;
+                button.onclick = () => selectAnswer(index, quiz.correct);
+                quizOptions.appendChild(button);
+            });
+
+            quizNumber.textContent = currentQuizIndex + 1;
+            feedbackContainer.innerHTML = '';
+            updateProgress();
+        }
+
+        function selectAnswer(selectedIndex, correctIndex) {
+            const isCorrect = selectedIndex === correctIndex;
+
+            quizAnswers[currentQuizIndex] = isCorrect;
+
+            const feedback = document.createElement('div');
+            feedback.className = `feedback p-4 rounded-xl mt-4 font-semibold text-lg ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+            feedback.textContent = isCorrect ? '✅ Correct!' : '❌ Incorrect!';
+            feedbackContainer.innerHTML = '';
+            feedbackContainer.appendChild(feedback);
+
+            document.querySelectorAll('.quizOption').forEach(btn => btn.disabled = true);
+        }
+
+        function nextQuiz() {
+            if (currentQuizIndex < 5) {
+                currentQuizIndex++;
+                updateQuizDisplay();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuiz() {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                updateQuizDisplay();
+            }
+        }
+
+        function showResults() {
+            quizContent.classList.add('hidden');
+            quizResults.classList.remove('hidden');
+
+            const correct = quizAnswers.filter(answer => answer === true).length;
+            const percentage = Math.round((correct / 6) * 100);
+
+            scoreDisplay.textContent = percentage;
+            correctCount.textContent = correct;
+            totalCount.textContent = '6';
+        }
+
+        function retakeQuiz() {
+            currentQuizIndex = 0;
+            quizAnswers = [];
+            quizContent.classList.remove('hidden');
+            quizResults.classList.add('hidden');
+            updateQuizDisplay();
+        }
+
+        // ============ PROGRESS TRACKER ============
+        function updateProgress() {
+            let completed = currentCardIndex + 1;
+            let total = filteredCards.length || 1;
+            let percentage = (completed / total) * 100;
+
+            progressBar.style.width = percentage + '%';
+            progressNum.textContent = completed;
+        }
+
+        // ============ DARK MODE ============
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            localStorage.setItem('darkMode', darkMode);
+            applyDarkMode(darkMode);
+        }
+
+        function applyDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                document.documentElement.classList.add('dark');
+                darkModeToggle.innerHTML = '☀️';
+                document.body.style.backgroundColor = '#1a1a2e';
+                document.body.style.color = '#eee';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.documentElement.classList.remove('dark');
+                darkModeToggle.innerHTML = '🌙';
+                document.body.style.backgroundColor = '';
+                document.body.style.color = '';
+            }
+        }
+
+        // ============ TAB NAVIGATION ============
+        function switchTab(tab) {
+            currentTab = tab;
+            tabButtons.forEach(btn => {
+                btn.classList.remove('tab-active', 'border-b-4', 'border-purple-600', 'text-purple-600');
+                btn.classList.add('border-transparent', 'text-gray-600');
+            });
+
+            document.getElementById(tab + 'Tab').classList.add('tab-active', 'border-purple-600', 'text-purple-600');
+
+            vocabSection.classList.add('hidden');
+            grammarSection.classList.add('hidden');
+            quizSection.classList.add('hidden');
+
+            if (tab === 'vocab') vocabSection.classList.remove('hidden');
+            if (tab === 'grammar') grammarSection.classList.remove('hidden');
+            if (tab === 'quiz') quizSection.classList.remove('hidden');
+        }
+
+        // ============ EVENT LISTENERS ============
+        function setupEventListeners() {
+            mainCard.addEventListener('click', flipCard);
+            nextBtn.addEventListener('click', nextCard);
+            prevBtn.addEventListener('click', prevCard);
+            pronunciationBtn.addEventListener('click', playPronunciation);
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+            nextQuizBtn.addEventListener('click', nextQuiz);
+            prevQuizBtn.addEventListener('click', prevQuiz);
+            retakeQuizBtn.addEventListener('click', retakeQuiz);
+            uiLanguageSelector.addEventListener('change', (e) => updateUILanguage(e.target.value));
+            scrollToLessonsBtn.addEventListener('click', () => {
+                document.getElementById('vocabSection').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            languageSelectors.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadLanguage(btn.dataset.language);
+                });
+            });
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.dataset.tab);
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                filterCards();
+            });
+
+            categoryFilterSelect.addEventListener('change', (e) => {
+                categoryFilter = e.target.value;
+                filterCards();
+            });
+        }
+
+        // ============ START ============
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
